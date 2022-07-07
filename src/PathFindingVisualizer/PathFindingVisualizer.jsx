@@ -78,6 +78,8 @@ export default class PathFindingVisualizer extends Component {
                 // So that they can be specifically reffered to the CSS element, that animates them
                 const node = nodesInShortestPathOrder[i];
                 //if (node.row !== START_NODE_ROW && node.col !== START_NODE_COL) {
+                if (node.isWall) 
+                    
                     document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
                 //}
 
@@ -129,9 +131,9 @@ export default class PathFindingVisualizer extends Component {
             // This div returns the grid for the nodes
             <>
                 <div className="header__container">
-                    <h2 className="header">Dijkstra's Algorithm Visualizer</h2>
+                    <h2 className="header">Breadth First Search Algorithm</h2>
                     <button className="btn" id="primary" onClick={() => this.visualizeDijkstra()}>
-                        Visualize Dijkstra's Algorithm
+                        Begin Red Node Search
                     </button>
                     <button className="btn" onClick={() => this.cleanVisitedNodes()}>
                         Clean visited Nodes
