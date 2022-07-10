@@ -3,13 +3,8 @@
  * in which they were visited. Also makes nodes point back to their  
  * previous node. Therefore, this method is for all the nodes visited,
  * while we are searching for the finish node.
- * 
  */
-
-const wallNodes = [];
-let x = 0;
-
-export function Dijkstra(grid, startNode, finishNode) {
+ export function Dijkstra(grid, startNode, finishNode) {
     /** 
      * if we encounter a wall, we skip it  
      * if (closestNode.isWall) continue  
@@ -19,7 +14,6 @@ export function Dijkstra(grid, startNode, finishNode) {
      */
 
     const visitedNodesInOrder = [];
-
     if (!startNode || !finishNode || startNode === finishNode) {
         return false;
     }
@@ -36,11 +30,8 @@ export function Dijkstra(grid, startNode, finishNode) {
         // and assigns that value to the closest Destination variable
         const closestNode = unvisitedNodes.shift(); 
 
-        if (closestNode.isWall) 
-            continue; 
-
-        if (closestNode.distance === Infinity) 
-            return visitedNodesInOrder; 
+        if (closestNode.isWall)  continue; 
+        if (closestNode.distance === Infinity) return visitedNodesInOrder; 
 
         closestNode.isVisited = true;
         // now because the closest node is visted, we add it to the array of visted nodes in order
@@ -66,11 +57,8 @@ export function getNodesInShortestPathOrder(finishNode) {
     let currentNode = finishNode;
     while (currentNode !== null) {
         nodesInShortestPathOrder.unshift(currentNode); // opposite direction
-        //if (currentNode.previousNode.isWall) 
-        //    continue;
         currentNode = currentNode.previousNode;
     }
-    console.log("Number of nodes in shortest path is",nodesInShortestPathOrder.length);
     return nodesInShortestPathOrder;
 }
 
@@ -114,7 +102,7 @@ function getUnvisitedNeighbours (node, grid) {
 /**
  * Returns an array of all the existing nodes
  */
-function getAllNodes(grid) {
+export function getAllNodes(grid) {
     const nodes = [];
     for (const row of grid) {
         for (const node of row) {

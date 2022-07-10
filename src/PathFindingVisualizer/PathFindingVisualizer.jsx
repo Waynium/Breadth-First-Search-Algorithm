@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Node from './Node/Node';
-import {Dijkstra, getNodesInShortestPathOrder} from '../Algorithms/Dijkstra';
+import { Dijkstra, getNodesInShortestPathOrder, getAllNodes } from '../Algorithms/Dijkstra';
  
 import './PathFindingVisualizer.css';
 
@@ -22,7 +22,10 @@ export default class PathFindingVisualizer extends Component {
         const grid = getInitialGrid();
         this.setState({grid});
     }
-
+    
+    /**
+     * Method used to generate wall when mouse is pressed
+     */
     handleMouseDown = (row, col) => {
         const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
         this.setState({grid: newGrid, mouseIsPressed: true});
@@ -78,9 +81,7 @@ export default class PathFindingVisualizer extends Component {
                 // So that they can be specifically reffered to the CSS element, that animates them
                 const node = nodesInShortestPathOrder[i];
                 //if (node.row !== START_NODE_ROW && node.col !== START_NODE_COL) {
-                if (node.isWall) 
-                    
-                    document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
+                document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
                 //}
 
             }, 50 * i);
@@ -123,6 +124,38 @@ export default class PathFindingVisualizer extends Component {
             }, 20 * i);
         }
     }
+    /*
+    generateWall() {
+        const {grid} = this.state;
+        const startNode = grid[START_NODE_ROW][START_NODE_COL];
+        const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+        // the dijstra method returns the visited nodes in order,
+        const allNodes = getAllNodes(grid);
+        var x = 0;
+        var y = 0;
+        //let x = Math.floor((Math.random() * 10) + 1);
+        for (let i = 0; i <= 20; i++) {
+            if (i === allNodes.length) {
+                return;
+            }
+            // eslint-disable-next-line no-loop-func
+            setTimeout(() => {
+                const node = allNodes[i];
+                if (node.isStart) {
+                    document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-start';
+                }
+                else if (node.isFinish) {
+                    document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-finish';
+                }
+                else {
+                    x = Math.floor((Math.random() * 25) + 10); // columns
+                    y = Math.floor((Math.random() * 25) + 3); // rows
+                    document.getElementById(`node-${y}-${x}`).className = 'node node-wall';
+                }
+            }, 20 * i);
+        }
+
+    }*/
 
     render() {
         const {grid, mouseIsPressed} = this.state;
@@ -133,11 +166,14 @@ export default class PathFindingVisualizer extends Component {
                 <div className="header__container">
                     <h2 className="header">Breadth First Search Algorithm</h2>
                     <button className="btn" id="primary" onClick={() => this.visualizeDijkstra()}>
-                        Begin Red Node Search
+                        Search for Red Node
                     </button>
-                    <button className="btn" onClick={() => this.cleanVisitedNodes()}>
+                    <button className="btn" id="primary" onClick={() => this.cleanVisitedNodes()}>
                         Clean visited Nodes
                     </button>
+                    {/*<button className="btn" onClick={() => this.generateWall()}>
+                        Generate New Wall
+                    </button>*/}
                     <div className="header__container"></div>
                 </div>
                 <div className="grid"> {/**This is where the whole grid is rendered */}
